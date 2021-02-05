@@ -124,7 +124,7 @@ const server = http.createServer((req, res) => {
         console.log(req.url, '/message...')
         const data = []
         req.on('data', (chuck) => {
-           data.push(chuck) 
+            data.push(chuck) 
         })
         return req.on('end', () => {
             const parseData = Buffer.concat(data).toString()
