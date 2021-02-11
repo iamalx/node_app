@@ -1,6 +1,7 @@
 // module for HTTP
 const http = require('http')
-const fs = require('fs')
+const routes = require('./routes2')
+// const fs = require('fs')
 // function rqListener(req, res) {}
 // http.createServer(rqListener)
 
@@ -152,7 +153,7 @@ const server = http.createServer((req, res) => {
 }) */
 
 // 36. Blocking and Non-Blocking Code
-const server = http.createServer((req, res) => {
+/* const server = http.createServer((req, res) => {
     // console.log(req.url, req.method, req.headers)
     console.log(1)
     const url = req.url
@@ -196,7 +197,9 @@ const server = http.createServer((req, res) => {
 
     // end write responce 
     res.end()
-})
+}) */
 
+// 38. Using the Node Modules System
+const server = http.createServer(routes.handler)
 // listen to server - start
 server.listen(3000)
