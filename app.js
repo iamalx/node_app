@@ -1,6 +1,6 @@
 // module for HTTP
 const http = require('http')
-const routes = require('./routes2')
+const routes = require('./routes2.js')
 // const fs = require('fs')
 // function rqListener(req, res) {}
 // http.createServer(rqListener)
