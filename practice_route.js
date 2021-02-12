@@ -63,17 +63,19 @@ function usersUrl(res) {
 }
 
 function createUserUrl(res, req) {
-    console.log('username2')
+    // console.log('username2')
     const dataArray = []
     req.on('data', (data) => {
         console.log(data)
         dataArray.push(data)
     })
+
     return req.on('end', _ => {
         const dataParsed = Buffer.concat(dataArray).toString()
         const decipheredData = dataParsed.split('=')[1]
-        console.log(decipheredData)
-        fs.writeFile('user_names.txt', decipheredData, err => {
+        // console.log(decipheredData)
+        
+        fs.writeFile('user_names.tbgxt', decipheredData, err => {
             res.statusCode = 302
             res.setHeader('Location', '/')
             return res.end()
