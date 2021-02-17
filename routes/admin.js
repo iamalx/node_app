@@ -1,7 +1,22 @@
 const  express = require('express')
 const router = express.Router()
 
-router.use('/add-product',(req, res, next) => {
+const path = require('path')
+
+
+router.get('/add-product',(req, res, next) => {
+    console.log(next, req.url)
+    // res.setHeader('') // replace res.
+    res.sendFile(path.join(__dirname, '..', 'views', 'add-product.html')) 
+})
+
+router.post('/product',(req, res, next) => {
+    console.log(req.body)
+    res.redirect('/')
+})
+
+
+/* router.use('/add-product',(req, res, next) => {
     console.log(next, req.url)
     // res.setHeader('') // replace res.
     res.send(`
@@ -21,9 +36,11 @@ router.use('/add-product',(req, res, next) => {
 })
 
 router.use('/product',(req, res, next) => {
-    console.log(next, req.url)
     console.log(req.body)
     res.redirect('/')
 })
+
+*/
+
 
 module.exports = {router: router}
