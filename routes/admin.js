@@ -3,16 +3,20 @@ const router = express.Router()
 
 const path = require('path')
 
+const rootDirectory = require('../helpers/path')
 
-router.get('/add-product',(req, res, next) => {
+products = []
+
+router.get('/add-product', (req, res, next) => {
     console.log(next, req.url)
     // res.setHeader('') // replace res.
-    res.sendFile(path.join(__dirname, '..', 'views', 'add-product.html')) 
+    res.sendFile(path.join(rootDirectory, 'views', 'add-product.html')) 
 })
 
-router.post('/product',(req, res, next) => {
+router.post('/add-product', (req, res, next) => {
     console.log(req.body)
-    res.redirect('/')
+    products.push({title: req.body.title}) 
+    res.redirect('/buy')
 })
 
 
@@ -43,4 +47,7 @@ router.use('/product',(req, res, next) => {
 */
 
 
-module.exports = {router: router}
+module.exports = {
+    router: router,
+    products: products,
+}
