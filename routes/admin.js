@@ -1,53 +1,24 @@
-const  express = require('express')
-const router = express.Router()
+const path = require('path');
 
-const path = require('path')
+const express = require('express');
 
-const rootDirectory = require('../helpers/path')
+const adminController = require('../controllers/admin');
 
-products = []
+const router = express.Router();
 
-router.get('/add-product', (req, res, next) => {
-    console.log(next, req.url)
-    // res.setHeader('') // replace res.
-    res.sendFile(path.join(rootDirectory, 'views', 'add-product.html')) 
-})
+// /admin/add-product => GET
+router.get('/add-product', adminController.getAddProduct);
 
-router.post('/add-product', (req, res, next) => {
-    console.log(req.body)
-    products.push({title: req.body.title}) 
-    res.redirect('/buy')
-})
+// /admin/products => GET
+router.get('/products', adminController.getProducts);
 
+// /admin/add-product => POST
+router.post('/add-product', adminController.postAddProduct);
 
-/* router.use('/add-product',(req, res, next) => {
-    console.log(next, req.url)
-    // res.setHeader('') // replace res.
-    res.send(`
-        <html>
-            <head>
-                <title>Express Node App</title>
-            </head>
-            <body>
-                <h1>Please enter message</h1>
-                <form action="/product" method="POST">
-                    <input type="text" name='user_name'>
-                    <button type="submit"></button>
-                </form>
-            </body>
-        </html>
-    `) //content type is set to html/txt as header   
-})
+router.get('/edit-product/:productId', adminController.getEditProduct);
 
-router.use('/product',(req, res, next) => {
-    console.log(req.body)
-    res.redirect('/')
-})
+router.post('/edit-product', adminController.postEditProduct);
 
-*/
+router.post('/delete-product', adminController.postDeleteProduct);
 
-
-module.exports = {
-    router: router,
-    products: products,
-}
+module.exports = router;
