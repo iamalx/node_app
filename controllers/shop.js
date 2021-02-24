@@ -1,8 +1,9 @@
 const Product = require('../models/product');
 
 exports.getProducts = (req, res, next) => {
-  Product.findAll()
+  Product.fetchAll()
     .then(products => {
+      console.log('getProducts', products)
       res.render('shop/product-list', {
         prods: products,
         pageTitle: 'All Products',
@@ -14,31 +15,10 @@ exports.getProducts = (req, res, next) => {
     });
 };
 
-exports.getProduct = (req, res, next) => {
-  const prodId = req.params.productId;
-  // Product.findAll({ where: { id: prodId } })
-  //   .then(products => {
-  //     res.render('shop/product-detail', {
-  //       product: products[0],
-  //       pageTitle: products[0].title,
-  //       path: '/products'
-  //     });
-  //   })
-  //   .catch(err => console.log(err));
-  Product.findById(prodId)
-    .then(product => {
-      res.render('shop/product-detail', {
-        product: product,
-        pageTitle: product.title,
-        path: '/products'
-      });
-    })
-    .catch(err => console.log(err));
-};
-
 exports.getIndex = (req, res, next) => {
-  Product.findAll()
+  Product.fetchAll()
     .then(products => {
+      console.log('getIndex', products,)
       res.render('shop/index', {
         prods: products,
         pageTitle: 'Shop',
@@ -49,6 +29,41 @@ exports.getIndex = (req, res, next) => {
       console.log(err);
     });
 };
+
+let tries = 0
+
+exports.getProduct = (req, res, next) => {
+  const prodId = req.params.productId;
+  // Product.findAll({ where: { id: prodId } })
+  //   .then(products => {
+  //     res.render('shop/product-detail', {
+  //       product: products[0],
+  //       pageTitle: products[0].title,
+  //       path: '/products'
+  //     });
+    // })
+    // .catch(err => console.log(err));
+    console.log('proId-shop', prodId, req.params)
+    console.log(tries)
+    // if(tries) return
+    // tries ++
+    
+  Product.findById(prodId)
+    .then(product => {
+      console.log('findById-shop', product)
+      res.render('shop/product-detail', {
+        product: product,
+        pageTitle: product.title,
+        path: '/products'
+      });
+      tries = 0
+    })
+    .catch(err => console.log(err));
+};
+
+
+/* 
+
 
 exports.getCart = (req, res, next) => {
   req.user
@@ -161,3 +176,5 @@ exports.getOrders = (req, res, next) => {
     })
     .catch(err => console.log(err));
 };
+ */
+

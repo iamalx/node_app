@@ -1,5 +1,56 @@
-const Sequelize = require('sequelize');
+// const { db } = require('../connectors');
+const getDb =  require('../util/database').getDb
+const mongoDBpackage = require('mongodb')
+class Product {
+    constructor(title, price, description, imageUrl) {
+        this.title = title
+        this.price = price
+        this.description = description
+        this.imageUrl = imageUrl
+    }
 
+    save() {
+        const db = getDb()
+        return db.collection('products')
+            .insertOne(this)
+            .then(result => {
+                console.log('save',  result)
+            })
+            .catch(err => {
+                console.log(err)
+            }) 
+    }
+    static fetchAll() {
+        const db = getDb()
+        return db.collection('products').find().toArray()
+            .then(result => {
+              // console.log(result)
+              return result
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+    }
+
+    static findById(proId) {
+      console.log('proId-prod: ', proId)
+        const db = getDb()
+        // console.log(mongodb)
+        return db.collection('products').find({_id: new mongoDBpackage.ObjectId(proId)})
+            .next()
+            .then(result => {
+              return result
+            })
+            .catch(err => {
+              console.log(err)
+            })
+
+    }
+}
+
+
+/* const Sequelize = require('sequelize');
 const sequelize = require('../util/database');
 
 const Product = sequelize.define('product', {
@@ -22,6 +73,6 @@ const Product = sequelize.define('product', {
     type: Sequelize.STRING,
     allowNull: false
   }
-});
+}); */
 
 module.exports = Product;
