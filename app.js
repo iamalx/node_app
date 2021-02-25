@@ -14,6 +14,7 @@ const OrderItem = require('./models/order-item');
  */
 
 const mongoConnect = require('./util/database').mongoConnect
+cosnt User = require('./models/user')
 
 const app = express();
 
