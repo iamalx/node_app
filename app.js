@@ -14,7 +14,7 @@ const OrderItem = require('./models/order-item');
  */
 
 const mongoConnect = require('./util/database').mongoConnect
-cosnt User = require('./models/user')
+const User = require('./models/user')
 
 const app = express();
 
@@ -27,15 +27,15 @@ const shopRoutes = require('./routes/shop');
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use((req, res, next) => {
-//   // User.findById(1)
-//   //   .then(user => {
-//   //     req.user = user;
-//   //     next();
-//   //   })
-//   //   .catch(err => console.log(err));
-//   next()
-// });
+app.use((req, res, next) => {
+  User.findById('60370de98d08ce86e7c7cf47')
+    .then(user => {
+      req.user = user;
+      next();
+    })
+    .catch(err => console.log(err));
+  // next()
+});
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -45,6 +45,7 @@ app.use(errorController.get404);
 
 mongoConnect(client => {
   // console.log(client)
+  
   app.listen(3000)
 })
 /* 

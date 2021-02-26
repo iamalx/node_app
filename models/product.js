@@ -2,21 +2,23 @@
 const getDb =  require('../util/database').getDb
 const mongoDBpackage = require('mongodb')
 class Product {
-    constructor(title, price, description, imageUrl, id) {
+    constructor(title, price, description, imageUrl, id, userId) {
         this.title = title
         this.price = price
         this.description = description
         this.imageUrl = imageUrl
         this._id = id ? new mongoDBpackage.ObjectId(id) : null
+        this.userId = userId
     }
 
     save() {
         const db = getDb()
         let dbOperations;
         if(this._id) {
+          console.log(this, 'njjnjn')
             console.log(this)
             dbOperations = db.collection('products')
-              .update({_id: this._id}, {$set: this})
+              .updateOne({_id: this._id}, {$set: this})
         }
         else {
           dbOperations = db.collection('products').insertOne(this)
